@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
 const useLibrary = type => {
@@ -11,13 +11,15 @@ const useLibrary = type => {
         const res = await Axios(
           `http://localhost:3001/api/v1/library/${type}/getTitles`
         );
-
+        console.log(res.data.count.n);
         setEntries(res.data.documents);
       } catch (error) {
         throw new Error(error.message);
       }
     };
-    getData();
+    if (!entries) {
+      getData();
+    }
   });
   return { entries };
 };
